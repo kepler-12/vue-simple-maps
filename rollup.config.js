@@ -7,6 +7,8 @@ import vue from 'rollup-plugin-vue'
 export default {
   input: 'src/main.js',
   plugins: [
+    // json and resolve allow rollup to import json files *without* the extension, i.e `import json from './myjsonfile'`.
+    // Prevents an issue with jest + babel where imported json _with_ an extension caused issues.
     json(),
     resolve({
       extensions: ['.js', '.json']
