@@ -49,7 +49,7 @@
   "bundlesize": [
     {
       "path": "./dist/vue-simple-maps.min.js",
-      "threshold": "4Kb"
+      "maxSize": "15kb"
     }
   ]
 }
