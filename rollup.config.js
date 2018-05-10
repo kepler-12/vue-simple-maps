@@ -1,12 +1,12 @@
+import babel from 'rollup-plugin-babel'
 import uglify from 'rollup-plugin-uglify'
-import VuePlugin from 'rollup-plugin-vue'
+import vue from 'rollup-plugin-vue'
 
-// rollup.config.js
 export default {
   input: 'src/main.js',
-  plugins: [VuePlugin(), process.env.NODE_ENV === 'production' && uglify()],
+  plugins: [vue(), babel({ exclude: 'node_modules/**' }), process.env.NODE_ENV === 'production' && uglify()],
   output: {
-    file: 'dist/vue-simple-maps.js',
+    file: process.env.NODE_ENV === 'production' ? 'dist/vue-simple-maps.min.js' : 'dist/vue-simple-maps.js',
     format: 'cjs'
   }
 }

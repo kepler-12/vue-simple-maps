@@ -10,16 +10,28 @@
     "type": "git",
     "url": "github.com/kepler-12/vue-simple-maps"
   },
-  "keywords": ["google", "maps", "vue.js", "vue"],
+  "keywords": [
+    "google",
+    "maps",
+    "vue.js",
+    "vue"
+  ],
   "scripts": {
     "build": "rollup -c",
-    "prepare": "npm run build"
+    "production": "NODE_ENV=production rollup -c",
+    "prepare": "npm run production",
+    "test:size": "bundlesize"
   },
   "peerDependencies": {
     "vue": "^2.5.16"
   },
   "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-preset-env": "^1.7.0",
+    "bundlesize": "^0.17.0",
     "rollup": "^0.58.2",
+    "rollup-plugin-babel": "^3.0.4",
     "rollup-plugin-uglify": "^3.0.0",
     "rollup-plugin-vue": "^4.1.0",
     "vue": "^2.5.16",
