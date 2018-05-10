@@ -1,0 +1,28 @@
+{
+  "name": "@kepler-12/vue-simple-maps",
+  "version": "0.0.1",
+  "description": "simple and performant google maps for vue.js",
+  "author": "Zack Krida <zc@kepler12.com> (https://kepler-12.com)",
+  "license": "MIT",
+  "main": "dist/vue-simple-maps.js",
+  "sideEffects": false,
+  "repository": {
+    "type": "git",
+    "url": "github.com/kepler-12/vue-simple-maps"
+  },
+  "keywords": ["google", "maps", "vue.js", "vue"],
+  "scripts": {
+    "build": "rollup -c",
+    "prepare": "npm run build"
+  },
+  "peerDependencies": {
+    "vue": "^2.5.16"
+  },
+  "devDependencies": {
+    "rollup": "^0.58.2",
+    "rollup-plugin-uglify": "^3.0.0",
+    "rollup-plugin-vue": "^4.1.0",
+    "vue": "^2.5.16",
+    "vue-template-compiler": "^2.5.16"
+  }
+}
