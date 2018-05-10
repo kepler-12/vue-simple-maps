@@ -10,7 +10,12 @@
     "type": "git",
     "url": "github.com/kepler-12/vue-simple-maps"
   },
-  "keywords": ["google", "maps", "vue.js", "vue"],
+  "keywords": [
+    "google",
+    "maps",
+    "vue.js",
+    "vue"
+  ],
   "scripts": {
     "build": "rollup -c",
     "production": "NODE_ENV=production rollup -c",
@@ -26,12 +31,15 @@
     "babel-core": "^6.26.3",
     "babel-jest": "^22.4.3",
     "babel-plugin-external-helpers": "^6.22.0",
+    "babel-plugin-transform-export-extensions": "^6.22.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "bundlesize": "^0.17.0",
     "jest": "^22.4.3",
     "jest-serializer-vue": "^1.0.0",
     "rollup": "^0.58.2",
     "rollup-plugin-babel": "^3.0.4",
+    "rollup-plugin-json": "^2.3.0",
     "rollup-plugin-uglify": "^3.0.0",
     "rollup-plugin-vue": "^4.1.0",
     "vue": "^2.5.16",
@@ -39,12 +47,18 @@
     "vue-template-compiler": "^2.5.16"
   },
   "jest": {
-    "moduleFileExtensions": ["js", "json", "vue"],
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "vue"
+    ],
     "transform": {
       "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
       ".*\\.(vue)$": "<rootDir>/node_modules/vue-jest"
     },
-    "snapshotSerializers": ["<rootDir>/node_modules/jest-serializer-vue"]
+    "snapshotSerializers": [
+      "<rootDir>/node_modules/jest-serializer-vue"
+    ]
   },
   "bundlesize": [
     {

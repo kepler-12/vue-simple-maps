@@ -1,8 +1,9 @@
 {
   "presets": [["env", { "modules": false }]],
+  "plugins": ["transform-object-rest-spread", "transform-export-extensions", "external-helpers"],
   "env": {
     "test": {
-      "presets": [["env", { "targets": { "node": 8 } }]]
+      "presets": [["env", { "targets": { "node": 10 } }]]
     }
   }
 }

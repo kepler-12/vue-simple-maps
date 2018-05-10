@@ -1,3 +1,2 @@
-import Map from './Map.vue'
-
-export default Map
+export Map from './Map.vue'
+export MapMarker from './MapMarker.vue'
