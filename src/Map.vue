@@ -6,7 +6,7 @@
 
 <script>
 /* global google */
-import themes from './assets/themes.json'
+import themes from './assets/themes'
 
 // The props for our component
 const props = {
