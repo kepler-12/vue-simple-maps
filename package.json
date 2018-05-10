@@ -24,5 +24,11 @@
     "rollup-plugin-vue": "^4.1.0",
     "vue": "^2.5.16",
     "vue-template-compiler": "^2.5.16"
-  }
+  },
+  "bundlesize": [
+    {
+      "path": "./dist/vue-simple-maps.min.js",
+      "threshold": "4Kb"
+    }
+  ]
 }
