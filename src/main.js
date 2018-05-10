@@ -1,3 +1,3 @@
-import wow from './wow.vue'
+import Map from './Map.vue'
 
-export default wow
+export default Map
