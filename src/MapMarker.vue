@@ -29,30 +29,20 @@ export default {
     settings() {
       return {
         ...this.options,
-        position: this.formattedPos
-      }
-    },
-    formattedPos() {
-      return {
-        lat: this.position.lat || this.position.latitude,
-        lng: this.position.lng || this.position.longitude
+        position: {
+          lat: this.position.lat || this.position.latitude,
+          lng: this.position.lng || this.position.longitude
+        }
       }
     }
   },
   mounted() {
     const map = this.$parent.map
 
-    // Create a marker and set its position.
-    this.marker = new google.maps.Marker({
-      map,
-      position: this.settings.position,
-      title: 'Hello World!',
-      animation: google.maps.Animation.DROP
-    })
-
+    this.marker = new google.maps.Marker({ map, ...this.settings })
     this.$parent.$emit('marker-added')
-
     this.info = new google.maps.InfoWindow({ content: this.$el.innerHTML })
+
     this.marker.addListener('click', () => {
       this.$parent.$emit('info-open')
       this.info.open(map, this.marker)
