@@ -5,7 +5,7 @@
 const props = {
   position: {
     type: Object,
-    required: true
+    required: false
   },
   options: {
     type: Object,
@@ -29,7 +29,13 @@ export default {
     settings() {
       return {
         ...this.options,
-        position: this.position
+        position: this.formattedPos
+      }
+    },
+    formattedPos() {
+      return {
+        lat: this.position.lat || this.position.latitude,
+        lng: this.position.lng || this.position.longitude
       }
     }
   },
@@ -40,8 +46,11 @@ export default {
     this.marker = new google.maps.Marker({
       map,
       position: this.settings.position,
-      title: 'Hello World!'
+      title: 'Hello World!',
+      animation: google.maps.Animation.DROP
     })
+
+    this.$parent.$emit('marker-added')
 
     this.info = new google.maps.InfoWindow({ content: this.$el.innerHTML })
     this.marker.addListener('click', () => {

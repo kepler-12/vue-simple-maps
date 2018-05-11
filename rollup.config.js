@@ -14,11 +14,11 @@ export default {
       extensions: ['.js', '.json']
     }),
     vue(),
-    babel({ exclude: 'node_modules/**', plugins: ['external-helpers'], externalHelpers: true }),
+    babel({ exclude: 'node_modules/**', plugins: ['external-helpers'] }),
     process.env.NODE_ENV === 'production' && uglify()
   ],
   output: {
-    file: process.env.NODE_ENV === 'production' ? 'dist/vue-simple-maps.min.js' : 'dist/vue-simple-maps.js',
+    file: 'dist/vue-simple-maps.min.js',
     format: 'cjs'
   }
 }

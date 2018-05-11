@@ -14,6 +14,10 @@ const props = {
     type: String,
     required: false
   },
+  ui: {
+    type: Boolean,
+    default: false
+  },
   options: {
     type: Object,
     required: false
@@ -39,14 +43,17 @@ export default {
   props,
   data: () => ({ map: {}, loaded: false, info: {} }),
   created() {
-    this.initGoogleMaps().then(
-      () => {
-        this.attachMap()
-        if (this.centerMapAround) this.positionMapFromLocations()
-      },
-      e => console.log(e)
-    ) // Add error handling later :)
+    !window.google &&
+      this.initGoogleMaps().then(
+        () => {
+          this.attachMap()
+          if (this.centerMapAround) this.positionMapFromLocations()
+        },
+        e => console.log(e)
+      ) // Add error handling later :)
+
     this.$on('info-open', () => this.$children.map(({ info }) => info.close()))
+    this.$on('marker-added', () => this.centerMapAround && this.positionMapFromLocations())
   },
   computed: {
     // Combine the values of the "options" prop with some sensible defaults
@@ -54,6 +61,7 @@ export default {
       let options = {
         zoom: 15,
         center: { lat: 41.885878, lng: -71.411963 },
+        disableDefaultUI: !this.ui,
         ...this.options
       }
 
@@ -84,12 +92,16 @@ export default {
     },
     positionMapFromLocations() {
       let bound = new google.maps.LatLngBounds()
-      this.centerMapAround.map(({ lat, lng }) => {
-        bound.extend(new google.maps.LatLng(lat, lng))
+      console.log(this.centerMapAround)
+      this.centerMapAround.map(({ position, lat, lng, latitude, longitude }) => {
+        bound.extend(
+          new google.maps.LatLng(
+            position.lat || position.latitude || lat || latitude,
+            position.lng || position.longitude || lng || longitude
+          )
+        )
       })
-      google.maps.event.addListenerOnce(this.map, 'idle', () => {
-        this.map.fitBounds(bound)
-      })
+      this.map.fitBounds(bound)
     }
   }
 }
