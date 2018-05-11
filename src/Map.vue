@@ -53,7 +53,7 @@ export default {
       ) // Add error handling later :)
 
     this.$on('info-open', () => this.$children.map(({ info }) => info.close()))
-    this.$on('marker-added', () => this.centerMapAround && this.positionMapFromLocations())
+    this.$on('marker-change', () => this.centerMapAround && this.positionMapFromLocations())
   },
   computed: {
     // Combine the values of the "options" prop with some sensible defaults
@@ -92,7 +92,7 @@ export default {
     },
     positionMapFromLocations() {
       let bound = new google.maps.LatLngBounds()
-      console.log(this.centerMapAround)
+
       this.centerMapAround.map(({ position, lat, lng, latitude, longitude }) => {
         bound.extend(
           new google.maps.LatLng(
