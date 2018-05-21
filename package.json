@@ -1,6 +1,6 @@
 {
   "name": "@kepler-12/vue-simple-maps",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "simple and performant google maps for vue.js",
   "author": "Zack Krida <zc@kepler12.com> (https://kepler-12.com)",
   "license": "MIT",
