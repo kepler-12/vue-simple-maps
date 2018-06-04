@@ -53,9 +53,9 @@ export default {
       ) // Add error handling later :)
 
     this.$on('info-open', () => this.$children.map(({ info }) => info.close()))
+
     if (this.options.cluster) {
       this.$on('marker-change', newMarker => {
-        console.log('new marker added!', newMarker)
         this.cluster && this.cluster.addMarker(newMarker)
       })
     }
