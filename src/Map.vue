@@ -43,7 +43,6 @@ export default {
   props,
   data: () => ({ map: {}, loaded: false, info: {} }),
   created() {
-    console.log('Updated map component2')
     !window.google &&
       this.initGoogleMaps().then(
         () => {
@@ -98,7 +97,6 @@ export default {
     },
     positionMapFromLocations() {
       let bound = new google.maps.LatLngBounds()
-      console.log('position map from locations log', this.centerMapAround)
       this.centerMapAround.map(({ position, lat, lng, latitude, longitude }) => {
         bound.extend(
           new google.maps.LatLng(
