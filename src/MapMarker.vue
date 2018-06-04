@@ -62,7 +62,7 @@ export default {
       })
     },
     update() {
-      this.$parent.$emit('marker-change')
+      this.$parent.$emit('marker-change', this.marker)
     }
   },
   mounted() {
@@ -71,7 +71,7 @@ export default {
     this.marker = new google.maps.Marker({ map, ...this.settings })
 
     // tell the map there's a new marker (useful for resizing, centering, etc.)
-    this.update()
+    this.update(this.marker)
 
     // initialize the info window, if content is present
     if (this.$slots.default) this.setupInfoWindow(map)
