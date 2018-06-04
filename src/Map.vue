@@ -41,7 +41,7 @@ const props = {
 export default {
   name: 'Map',
   props,
-  data: () => ({ map: {}, loaded: false, info: {} }),
+  data: () => ({ map: {}, loaded: false, info: {}, cluster: null }),
   created() {
     !window.google &&
       this.initGoogleMaps().then(
@@ -53,7 +53,12 @@ export default {
       ) // Add error handling later :)
 
     this.$on('info-open', () => this.$children.map(({ info }) => info.close()))
-    // this.$on('marker-change', () => this.centerMapAround && this.positionMapFromLocations())
+    if (this.options.cluster) {
+      this.$on('marker-change', newMarker => {
+        console.log('new marker added!', newMarker)
+        this.cluster && this.cluster.addMarker(newMarker)
+      })
+    }
   },
   computed: {
     // Combine the values of the "options" prop with some sensible defaults
@@ -91,10 +96,19 @@ export default {
         document.body.appendChild(cluster)
       })
     },
-    initGoogleMaps() {
-      if (this.options.cluster) {
-        this.initClusterScript()
+    setCluster(newMarker) {
+      if (!this.cluster) {
+        this.initClusterScript().then(() => {
+          let cluster = new MarkerClusterer(this.map, this.$children.map(({ marker }) => marker), {
+            imagePath: 'https://s3.amazonaws.com/vue-simple-maps/m'
+          })
+          this.cluster = cluster
+        })
       }
+    },
+    initGoogleMaps() {
+      if (this.options.cluster) this.initClusterScript()
+
       return new Promise((resolve, reject) => {
         // Attach the Google Maps API Script to the Site
         let googleMaps = document.createElement('script')
@@ -109,12 +123,7 @@ export default {
     },
     attachMap() {
       this.map = new google.maps.Map(this.$el, this.mergedOptions)
-
-      this.initClusterScript().then(() => {
-        var markerCluster = new MarkerClusterer(this.map, this.$children.map(({ marker }) => marker), {
-          imagePath: 'https://s3.amazonaws.com/vue-simple-maps/m'
-        })
-      })
+      this.setCluster()
 
       this.loaded = true
     },
