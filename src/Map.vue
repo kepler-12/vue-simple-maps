@@ -89,9 +89,7 @@ export default {
     },
     visibleMarkers() {
       let results = this.$children.filter(({ marker }) => this.map.getBounds().contains(marker.getPosition()))
-      return results[0].locationObject
-        ? results.map(({ locationObject }) => locationObject)
-        : results.map(({ key }) => key)
+      return results[0].locationObject ? results.map(({ locationObject }) => locationObject) : results.map(comp => comp)
     }
   },
   watch: {
