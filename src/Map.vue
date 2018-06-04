@@ -53,7 +53,7 @@ export default {
       ) // Add error handling later :)
 
     this.$on('info-open', () => this.$children.map(({ info }) => info.close()))
-    this.$on('marker-change', () => this.centerMapAround && this.positionMapFromLocations())
+    // this.$on('marker-change', () => this.centerMapAround && this.positionMapFromLocations())
   },
   computed: {
     // Combine the values of the "options" prop with some sensible defaults
@@ -72,6 +72,11 @@ export default {
       return options
     }
   },
+  watch: {
+    'centerMapAround'() {
+      this.positionMapFromLocations()
+    }
+  },
   methods: {
     initGoogleMaps() {
       return new Promise((resolve, reject) => {
@@ -80,7 +85,7 @@ export default {
         googleMaps.setAttribute('async', true)
         googleMaps.setAttribute('defer', true)
         googleMaps.type = 'text/javascript'
-        googleMaps.setAttribute('src', `//maps.googleapis.com/maps/api/js`) // ?key=${this.props.apiKey}
+        googleMaps.setAttribute('src', `//maps.googleapis.com/maps/api/js?key=${this.apiKey}`)
         googleMaps.onload = resolve
         googleMaps.onerror = reject
         document.body.appendChild(googleMaps)
@@ -92,7 +97,6 @@ export default {
     },
     positionMapFromLocations() {
       let bound = new google.maps.LatLngBounds()
-
       this.centerMapAround.map(({ position, lat, lng, latitude, longitude }) => {
         bound.extend(
           new google.maps.LatLng(
