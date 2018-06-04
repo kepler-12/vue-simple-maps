@@ -10,6 +10,10 @@ import themes from './assets/themes'
 
 // The props for our component
 const props = {
+  onChange: {
+    type: Function,
+    required: false
+  },
   apiKey: {
     type: String,
     required: false
@@ -47,7 +51,14 @@ export default {
       this.initGoogleMaps().then(
         () => {
           this.attachMap()
-          if (this.centerMapAround) this.positionMapFromLocations()
+          if (this.centerMapAround)
+            this.positionMapFromLocations()
+
+            // For each map event we want to follow, set an event listener and return a cb
+            // which calls our onChange prop with the currently visible markers
+          ;['bounds_changed'].map(event =>
+            google.maps.event.addListener(this.map, event, () => this.onChange(this.visibleMarkers))
+          )
         },
         e => console.log(e)
       ) // Add error handling later :)
@@ -75,6 +86,10 @@ export default {
       }
 
       return options
+    },
+    visibleMarkers() {
+      console.log('bounds', this.map.getBounds())
+      return this.$children.filter(({ marker }) => this.map.getBounds().contains(marker.getPosition()))
     }
   },
   watch: {
