@@ -83,6 +83,10 @@ export default {
     }
   },
   methods: {
+    /**
+     * Helpful api for the clusterer here:
+     *     http://htmlpreview.github.io/?https://github.com/googlemaps/v3-utility-library/blob/master/markerclusterer/docs/reference.html
+     */
     initClusterScript() {
       return new Promise((resolve, reject) => {
         let cluster = document.createElement('script')
