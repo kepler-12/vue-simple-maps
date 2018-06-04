@@ -73,12 +73,28 @@ export default {
     }
   },
   watch: {
-    'centerMapAround'() {
+    centerMapAround() {
       this.positionMapFromLocations()
     }
   },
   methods: {
+    initClusterScript() {
+      return new Promise((resolve, reject) => {
+        let cluster = document.createElement('script')
+        cluster.type = 'text/javascript'
+        cluster.setAttribute(
+          'src',
+          '//developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js'
+        )
+        cluster.onload = resolve
+        cluster.onerror = reject
+        document.body.appendChild(cluster)
+      })
+    },
     initGoogleMaps() {
+      if (this.options.cluster) {
+        this.initClusterScript()
+      }
       return new Promise((resolve, reject) => {
         // Attach the Google Maps API Script to the Site
         let googleMaps = document.createElement('script')
@@ -93,6 +109,13 @@ export default {
     },
     attachMap() {
       this.map = new google.maps.Map(this.$el, this.mergedOptions)
+
+      this.initClusterScript().then(() => {
+        var markerCluster = new MarkerClusterer(this.map, this.$children.map(({ marker }) => marker), {
+          imagePath: 'https://s3.amazonaws.com/vue-simple-maps/m'
+        })
+      })
+
       this.loaded = true
     },
     positionMapFromLocations() {
