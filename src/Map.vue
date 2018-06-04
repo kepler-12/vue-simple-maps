@@ -51,11 +51,12 @@ export default {
       this.initGoogleMaps().then(
         () => {
           this.attachMap()
-          if (this.centerMapAround)
+          if (this.centerMapAround) {
             this.positionMapFromLocations()
+          }
 
-            // For each map event we want to follow, set an event listener and return a cb
-            // which calls our onChange prop with the currently visible markers
+          // For each map event we want to follow, set an event listener and return a cb
+          // which calls our onChange prop with the currently visible markers
           ;['bounds_changed'].map(event =>
             google.maps.event.addListener(this.map, event, () => this.onChange(this.visibleMarkers))
           )
@@ -89,7 +90,9 @@ export default {
     },
     visibleMarkers() {
       let results = this.$children.filter(({ marker }) => this.map.getBounds().contains(marker.getPosition()))
-      return results[0].locationObject ? results.map(({ locationObject }) => locationObject) : results.map(comp => comp)
+      return results[0] && results[0].locationObject
+        ? results.map(({ locationObject }) => locationObject)
+        : results.map(comp => comp)
     }
   },
   watch: {
@@ -143,7 +146,6 @@ export default {
     attachMap() {
       this.map = new google.maps.Map(this.$el, this.mergedOptions)
       this.setCluster()
-
       this.loaded = true
     },
     positionMapFromLocations() {
