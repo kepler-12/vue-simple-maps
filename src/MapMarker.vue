@@ -18,6 +18,10 @@ const props = {
   iconSize: {
     type: String,
     required: false
+  },
+  locationObject: {
+    type: Object,
+    required: false
   }
 }
 
