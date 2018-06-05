@@ -121,7 +121,8 @@ export default {
     setCluster(newMarker) {
       if (!this.cluster) {
         this.initClusterScript().then(() => {
-          let cluster = new MarkerClusterer(this.map, this.$children.map(({ marker }) => marker), {
+          let options = typeof this.options.cluster === 'object' ? this.options.cluster : {}
+          let cluster = new MarkerClusterer(this.map, this.$children.map(({ marker }) => marker, options), {
             imagePath: 'https://s3.amazonaws.com/vue-simple-maps/m'
           })
           this.cluster = cluster
