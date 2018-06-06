@@ -7,6 +7,7 @@
 <script>
 /* global google */
 import themes from './assets/themes'
+import { debounce } from './utils'
 
 // The props for our component
 const props = {
@@ -60,7 +61,7 @@ export default {
           // the current map object
           //  the currently visible markers
           ;['bounds_changed'].map(event =>
-            google.maps.event.addListener(this.map, event, () => this.onChange(this.map, this.visibleMarkers))
+            google.maps.event.addListener(this.map, event, debounce(this.onChange(this.map, this.visibleMarkers), this.options.debounce || 250)
           )
         },
         e => console.log(e)
