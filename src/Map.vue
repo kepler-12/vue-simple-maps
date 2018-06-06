@@ -56,9 +56,11 @@ export default {
           }
 
           // For each map event we want to follow, set an event listener and return a cb
-          // which calls our onChange prop with the currently visible markers
+          // which calls our onChange prop with:
+          // the current map object
+          //  the currently visible markers
           ;['bounds_changed'].map(event =>
-            google.maps.event.addListener(this.map, event, () => this.onChange(this.visibleMarkers))
+            google.maps.event.addListener(this.map, event, () => this.onChange(this.map, this.visibleMarkers))
           )
         },
         e => console.log(e)
